@@ -1,0 +1,25 @@
+﻿{
+    "terminal.integrated.env.windows":  {
+                                            "POWERSHELL_AUTHORITY":  "Superintelligence",
+                                            "GITHUB_RUNNER":  "True",
+                                            "VAULT_ENABLED":  "True",
+                                            "ADV_CYBERSEC_POLICY":  "ZeroTrust,AI-Integrity,ImmutableAudit",
+                                            "AUDIT_LOG_PATH":  "C:\\Users\\Hunter\\PowerGit\\Logs",
+                                            "SECURE_FILES_PATH":  "C:\\Users\\Hunter\\PowerGit\\CommonFiles"
+                                        },
+    "terminal.integrated.defaultProfile.windows":  "PowerShell",
+    "cosmos-connect.workspaceChain":  "Cosmos Hub",
+    "terminal.integrated.cwd":  "C:\\Users\\Hunter\\PowerGit",
+    "cosmos-connect.chains":  [
+                                  {
+                                      "websocket":  "wss://rpc.lavenderfive.com/cosmoshub/websocket",
+                                      "rest":  "https://rest.lavenderfive.com:443/cosmoshub",
+                                      "name":  "Cosmos Hub"
+                                  },
+                                  {
+                                      "websocket":  "ws://localhost:26657/websocket",
+                                      "rest":  "http://localhost:1317",
+                                      "name":  "Localnet"
+                                  }
+                              ]
+}

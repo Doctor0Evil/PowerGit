@@ -1,0 +1,14 @@
+﻿{
+    "chains": [
+        {
+            "name": "Cosmos Hub",
+            "rest": "https://rest.lavenderfive.com:443/cosmoshub",
+            "websocket": "wss://rpc.lavenderfive.com/cosmoshub/websocket"
+        },
+        {
+            "name": "Localnet",
+            "rest": "http://localhost:1317",
+            "websocket": "ws://localhost:26657/websocket"
+        }
+    ]
+}
