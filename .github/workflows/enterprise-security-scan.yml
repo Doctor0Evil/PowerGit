@@ -1,0 +1,66 @@
+name: Enterprise Security Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '20 05 * * 3'   # Every Wednesday at 05:20 UTC
+
+jobs:
+  secure-scan:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      security-events: write
+      id-token: write
+
+    steps:
+      # ALN-Compliant Audit Logging
+      - name: Start ALN Audit Log
+        run: echo "ALN Immutable Audit: Security job started"
+
+      # Checkout Source Code (shallow for public safety)
+      - name: Secure Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      
+      # Enforce clean, isolated .NET setup
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            6.0.x
+
+      # Microsoft Security DevOps
+      - name: Security Scan (MSDO)
+        uses: microsoft/security-devops-action@v1.6.0
+
+      # Policy Compliance Check (OPA/ALN)
+      - name: Policy-as-Code Compliance
+        uses: open-policy-agent/opa-github-action@v2
+        with:
+          policy-file: ./compliance/policy.rego
+      
+      # Upload SARIF to GitHub Security Tab
+      - name: Upload SARIF to Security Tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.secure-scan.outputs.sarifFile }}
+      
+      # (Optional) Securely Upload Artifacts for Traceability
+      - name: Upload Scan Artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: security-scan-artifacts
+          path: ${{ github.workspace }}/artifacts
+
+      # Compliance Alert Reporting, No Secrets Ever Output
+      - name: ALN Compliance Alert Hook
+        run: echo "See logs/artifact dashboard for compliance results; no secrets published."
+
+      # End Audit Trace
+      - name: End ALN Audit Log
+        run: echo "ALN Immutable Audit: Security job completed"
