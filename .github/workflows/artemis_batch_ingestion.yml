@@ -1,0 +1,23 @@
+name: Batch Artemis ALN File Generation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-artemis-aln-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate ALN Task Files
+        run: |
+          for i in $(seq -w 1 200); do
+            echo -e "ALN_TASK $i\nTECH_NAME: Tech-$i\nDESTINATION: VSC-ARTEMIS-5E8A2B7C-AC41-4F2B-BD6E-9C3E7A1F4D2E" > "artemis-tech-${i}.aln"
+          done
+
+      - name: Upload Artifact Files
+        uses: actions/upload-artifact@v5
+        with:
+          name: artemis-aln-tasks
+          path: artemis-tech-*.aln
