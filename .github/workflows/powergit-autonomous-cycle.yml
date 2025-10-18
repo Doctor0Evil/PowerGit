@@ -1,0 +1,55 @@
+name: PowerGit Autonomous Cycle
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  powergit-enhanced-cycle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      id-token: write
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup PowerShell 7, Install PowerGit (latest)
+        run: |
+          sudo apt-get update && sudo apt-get install -y powershell
+          pwsh -c "Install-Module PowerGit -Scope CurrentUser -Force; Import-Module PowerGit"
+
+      - name: Immutable Pre-Audit Snapshot
+        run: pwsh -c "Snapshot-GitRepository -Repository . -Mode PreAudit"
+
+      - name: Autonomous Multi-Stage Secret and Compliance Scan
+        run: |
+          pwsh -c "Scan-GitSecret -Repository ."
+          pwsh -c "Audit-GitRepository -Repository ."
+
+      - name: Adaptive Code & Policy Drift Analysis
+        run: pwsh -c "Policy-GitDriftAnalysis -Repository ."
+
+      - name: Dynamic Rollback on High-Risk Detection
+        run: |
+          RESULT=$(pwsh -c "Get-GitSecurityStatus -Repository . | Where-Object { \$_.RiskLevel -ge 8 }")
+          if [ ! -z "$RESULT" ]; then
+            pwsh -c "Rollback-GitRepository -Repository . -ToSnapshot PreAudit"
+            echo "Auto rollback triggered due to high risk."
+            exit 1
+          fi
+
+      - name: Self-Healing Forensics Artifact Generation
+        run: pwsh -c "Archive-GitForensics -Repository . -IncludeAuditTrail"
+
+      - name: Upload Artifacts & Reports
+        uses: actions/upload-artifact@v5
+        with:
+          name: powergit-autonomous-artifacts
+          path: |
+            *.audit.*
+            *.forensics.*
+            *.snapshot.*
