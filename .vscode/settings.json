@@ -1,4 +1,4 @@
-﻿{
+{
     "terminal.integrated.env.windows":  {
                                             "POWERSHELL_AUTHORITY":  "Superintelligence",
                                             "GITHUB_RUNNER":  "True",
@@ -8,7 +8,7 @@
                                             "SECURE_FILES_PATH":  "C:\\Users\\Hunter\\PowerGit\\CommonFiles"
                                         },
     "terminal.integrated.defaultProfile.windows":  "PowerShell",
-    "cosmos-connect.workspaceChain":  "Cosmos Hub",
+    "cosmos-connect.workspaceChain":  "Localnet",
     "terminal.integrated.cwd":  "C:\\Users\\Hunter\\PowerGit",
     "cosmos-connect.chains":  [
                                   {

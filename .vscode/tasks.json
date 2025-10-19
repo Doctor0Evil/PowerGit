@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build:wasm",
+      "type": "shell",
+      "command": "cargo build --target wasm32-wasi --profile dev",
+      "options": { "cwd": "${workspaceFolder}/crates/scope_def" },
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "run:wasmtime",
+      "type": "shell",
+      "command": "wasmtime ${workspaceFolder}/target/wasm32-wasi/debug/scope_def.wasm --env SCOPE_MANIFEST=.compliance/scope.manifest.json --env POLICY_LEDGER=.compliance/policy.ledger.json --env AUDIT_OUT=.compliance/run.audit.json --wasi",
+      "dependsOn": ["build:wasm"]
+    }
+  ]
+}

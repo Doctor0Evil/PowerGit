@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Scope terminal (PowerShell)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "pwsh",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-Command",
+        "wasmtime ${workspaceFolder}/target/wasm32-wasi/debug/scope_def.wasm --env SCOPE_MANIFEST=${workspaceFolder}/.compliance/scope.manifest.json --env POLICY_LEDGER=${workspaceFolder}/.compliance/policy.ledger.json --env AUDIT_OUT=${workspaceFolder}/.compliance/run.audit.json --wasi"
+      ],
+      "console": "integratedTerminal",
+      "preLaunchTask": "build:wasm"
+    }
+  ]
+}
